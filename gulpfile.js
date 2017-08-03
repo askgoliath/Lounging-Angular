@@ -2,7 +2,8 @@
 var gulp = require("gulp");
 var del = require("del");
 var sourcemaps = require('gulp-sourcemaps');
-
+var cachebust = require('gulp-cache-bust');
+ 
 /**
  * Remove build directory.
  */
@@ -16,16 +17,34 @@ gulp.task('clean', function (cb) {
 gulp.task("resources", ["server", "app", "assets"], function () {
     console.log("Building resources...");
 });
+
 /* copy the app core files to the build folder */
 gulp.task("app", ['index'], function(){
     return gulp.src(["app/**", "!app/**/*.ts"])
         .pipe(gulp.dest("build/app"));
 });
+
 /* get the index file to the root of the build */
 gulp.task("index", function(){
     return gulp.src(["index.html"])
         .pipe(gulp.dest("build"));
 });
+
+/**
+ * Bust the cache of asset references in the index.html file in the build folder.
+ */
+gulp.task("handleCaching", ["cachebust"], function () {
+    console.log("Bust index.html cache...");
+});
+
+gulp.task("cachebust", function(){
+    return gulp.src('build/index.html')
+    .pipe(cachebust({
+        type: 'timestamp'
+    }))
+    .pipe(gulp.dest('build'));
+});
+
 /* copy node server to build folder */
 gulp.task("server", function () {
     return gulp.src(["index.js", "package.json"], { cwd: "server/**" })
@@ -58,3 +77,6 @@ gulp.task("libs", function () {
 gulp.task("default", ['resources', 'libs'], function () {
     console.log("Building the project ...");
 });
+
+
+
