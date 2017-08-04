@@ -24,7 +24,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: '<h1>One step for dave. A leap for mandem</h1>'
+                        template: '<h1>One step for dave. A leap for mandem.</h1> \
+        <p> Test cache busting </p> \
+    '
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
