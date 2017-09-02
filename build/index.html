@@ -38,9 +38,27 @@
       System.import('app/main')
             .then(null, console.error.bind(console));
     </script>
+
+    <script>
+
+        function sendData(o) {
+            Native("dataCallback", o);
+        }
+        
+        function sendData(o,b) {
+            Native("dataCallback", [o, b]);
+        }
+
+        function onUpdateFinished(){
+        	Native("chartUpdated", chart);
+        }
+    </script>
   </head>
   <!-- 3. Display the application -->
   <body>
+    <div>
+		  <h2><button onclick="sendData('David','Join Lounge');"> Join Lounge </button></h2>
+	  </div>
     <my-app>Loading...</my-app>
   </body>
 </html>
