@@ -40,6 +40,14 @@
     </script>
 
     <script>
+        // HACK HACK HACK
+        // Create a system like NativeFunc2 but one that we have full control over.
+        // See complete explanation in Xamarin....
+        window.nativeFuncs2 = [];
+        window.NativeFunction = function (action, data, callback) {
+            var callbackId = nativeFuncs2.push(callback) - 1;
+            Native(action, JSON.stringify(data) + '!' + callbackId);
+        };
 
         function sendData(o) {
             Native("dataCallback", o);
